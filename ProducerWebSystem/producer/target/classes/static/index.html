@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <title>Acnovate - Apache Kafka</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+<header class="fixed">
+    <nav class="navbar navbar-expand-lg topbar shadow mb-1 static-top d-flex bg-light"
+         style="font-family: 'Times New Roman', Times, serif; padding: 5px;">
+        <a href="/" class="mr-auto logo" style="padding-left: 20px;">
+            <h2 style="margin-bottom: -10px;">
+                <u>
+                    <img src="/cloud.png" alt="cloud" width="40" height="50" style="padding-bottom: 8px;"/>
+                    Acnovate
+                </u>
+            </h2>
+        </a>
+    </nav>
+</header>
+
+
+<div class="container p-1 border shadow mb-1">
+    <h2 class="text-center text-danger"><u>Audit-Report Generator</u></h2>
+    <hr/>
+    <div class="form-group container">
+        <label for="subject" style="color: darkred;"><h5><u>Select Category:</u></h5></label>
+        <select class="form-control" id="subject" name="subject">
+            <option>Parts</option>
+            <option>Documents</option>
+            <option>ChangeRequest</option>
+            <option>ChangeNotice</option>
+        </select>
+        <br/>
+        <label for="message" style="color: darkred;"><h5><u>Drop Report Here:</u></h5></label>
+        <textarea class="form-control" rows="5" id="message" ></textarea>
+        <br/>
+        <button id="produce" class="btn btn-success"> Submit Report </button>
+    </div>
+    <br/>
+    <h5 class="container" style="color: darkred;"><u>Report History:</u></h5>
+
+    <div class="table-responsive container">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr class="table-info">
+                <th>Category</th>
+                <th>Report</th>
+            </tr>
+            </thead>
+            <tbody id="rowMessage">
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<br/>
+<br/>
+
+<script>
+    document.getElementById("produce").onclick = function () {
+        with (new XMLHttpRequest()) {
+            console.log("-->> Upload Text.");
+            open('POST', '/publish?subject=' + encodeURI(document.getElementById('subject').value) + '&message=' + encodeURI(document.getElementById('message').value), true);
+            responseType = 'text';
+            send();
+            var row = document.getElementById("rowMessage").insertRow(0);
+            row.insertCell(0).innerHTML = document.getElementById('subject').value;
+            row.insertCell(1).innerHTML = document.getElementById('message').value;
+            document.getElementById('message').value = "";
+        }
+    }
+</script>
+
+
+</body>
+
+
+</html>
+
