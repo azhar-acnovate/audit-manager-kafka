@@ -113,7 +113,7 @@ public class QiwkAuditReportHandler implements MessageHandler {
 			auditObjectChangeTracker.setEventOccurence(eventOccurence);
 			auditObjectChangeTracker.setEventType(eventType);
 			auditObjectChangeTracker.setRefObjectId(refObjectId);
-			auditObjectChangeTracker = new AuditObjectChangeTracker();
+			auditObjectChangeTracker = auditObjectChangeTrackerRepository.save(auditObjectChangeTracker);
 		}
 
 		AuditAttributeChangeTracker auditAttributeChangeTracker = new AuditAttributeChangeTracker();
@@ -121,6 +121,7 @@ public class QiwkAuditReportHandler implements MessageHandler {
 		auditAttributeChangeTracker.setOldValue(oldValue);
 		auditAttributeChangeTracker.setNewValue(newValue);
 		auditAttributeChangeTracker.setChangedBy(changedBy);
+		auditAttributeChangeTracker.setAuditObjectChangeTracker(auditObjectChangeTracker);
 		// LocalDateTime currentDateTime = LocalDateTime.now();
 
 		auditAttributeChangeTrackerRepository.save(auditAttributeChangeTracker);
