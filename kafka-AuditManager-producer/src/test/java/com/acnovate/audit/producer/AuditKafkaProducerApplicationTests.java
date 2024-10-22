@@ -1,10 +1,10 @@
-package com.acnovate.qiwk.producer;
+package com.acnovate.audit.producer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class QiwkKafkaProducerApplicationTests {
+class AuditKafkaProducerApplicationTests {
 
 	@Test
 	void contextLoads() {

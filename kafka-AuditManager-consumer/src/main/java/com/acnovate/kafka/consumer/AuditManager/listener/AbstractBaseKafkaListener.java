@@ -1,7 +1,7 @@
 package com.acnovate.kafka.consumer.AuditManager.listener;
 
 
-import com.acnovate.kafka.consumer.AuditManager.domain.dto.event.QiwkEvent;
+import com.acnovate.kafka.consumer.AuditManager.domain.dto.event.AuditEvent;
 import com.acnovate.kafka.consumer.AuditManager.errortemplate.ErrorTemplate;
 import com.acnovate.kafka.consumer.AuditManager.exception.MaybeRecoverableException;
 import com.acnovate.kafka.consumer.AuditManager.exception.MessageDeserializationException;
@@ -68,8 +68,8 @@ public abstract class AbstractBaseKafkaListener extends KafkaSeekOffsetAwareList
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         ErrorTemplate.handle(ErrorTemplate.withExecutionTimeout(batchProcessingTimeout, MILLISECONDS), () -> {
-            final QiwkEvent event = unmarshallerService.unmarshal(message,
-                    new TypeReference<QiwkEvent>() {
+            final AuditEvent event = unmarshallerService.unmarshal(message,
+                    new TypeReference<AuditEvent>() {
                     });
             return handle(event, headers);
         }).onError(MessageDeserializationException.class, ErrorTemplate.fail(),
@@ -113,7 +113,7 @@ public abstract class AbstractBaseKafkaListener extends KafkaSeekOffsetAwareList
      * @param headers message header
      * @return ProcessingResult
      */
-    protected String handle(final QiwkEvent event, final MessageHeaders headers) {
+    protected String handle(final AuditEvent event, final MessageHeaders headers) {
         return messageHandlers.stream()
                 .filter(messageHandler -> messageHandler.isSupported(event.getMetadata().getEventName()))
                 .findFirst()

@@ -1,7 +1,7 @@
 package com.acnovate.kafka.consumer.AuditManager.handler;
 
 
-import com.acnovate.kafka.consumer.AuditManager.domain.dto.event.QiwkEvent;
+import com.acnovate.kafka.consumer.AuditManager.domain.dto.event.AuditEvent;
 
 import java.util.Map;
 
@@ -19,7 +19,7 @@ public interface MessageHandler {
      * @param headers the headers Kafka headers
      * @return message processing result. Cannot be {@code null}
      */
-    String handle(QiwkEvent message, Map<String, Object> headers);
+    String handle(AuditEvent message, Map<String, Object> headers);
 
     /**
      * Tells if particular handler is supposed to react on incoming event

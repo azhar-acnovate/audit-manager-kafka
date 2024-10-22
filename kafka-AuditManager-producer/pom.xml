@@ -6,8 +6,8 @@
 		<version>2.7.14</version>
 		<relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>kafka.qiwk.producer</groupId>
-  <artifactId>kafka-qiwk-producer</artifactId>
+  <groupId>kafka.audit.producer</groupId>
+  <artifactId>kafka-audit-producer</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <properties>
   </properties>

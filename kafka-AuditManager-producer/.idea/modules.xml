@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../kafka-windchill-qiwk-consumer/kafka-windchill-qiwk-consumer/kafka-windchill-qiwk-consumer.iml" filepath="$PROJECT_DIR$/../kafka-windchill-qiwk-consumer/kafka-windchill-qiwk-consumer/kafka-windchill-qiwk-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../kafka-auditreport-consumer/kafka-auditreport-consumer/kafka-auditreport-consumer.iml" filepath="$PROJECT_DIR$/../kafka-auditreport-consumer/kafka-auditreport-consumer/kafka-auditreport-consumer.iml" />
     </modules>
   </component>
 </project>

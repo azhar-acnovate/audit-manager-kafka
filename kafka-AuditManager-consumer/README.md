@@ -1,4 +1,4 @@
-# kafka-qiwk-consumer
+# kafka-audit-consumer
 
 
 
@@ -15,14 +15,10 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://acnops.acnovate.us/dinesh-goyal/kafka-qiwk-consumer.git
+git remote add origin https://acnops.acnovate.us/dinesh-goyal/kafka-audit-consumer.git
 git branch -M main
 git push -uf origin main
 ```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://acnops.acnovate.us/dinesh-goyal/kafka-qiwk-consumer/-/settings/integrations)
 
 ## Collaborate with your team
 

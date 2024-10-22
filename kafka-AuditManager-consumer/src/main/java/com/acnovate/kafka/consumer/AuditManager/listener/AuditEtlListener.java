@@ -24,10 +24,10 @@ import java.util.Collection;
 @Profile(value = "!test")
 @Slf4j
 @Component
-public class QiwkEtlListener extends AbstractBaseKafkaListener {
+public class AuditEtlListener extends AbstractBaseKafkaListener {
 
     @Autowired
-    public QiwkEtlListener(Collection<MessageHandler> messageHandlers) {
+    public AuditEtlListener(Collection<MessageHandler> messageHandlers) {
         super(messageHandlers);
     }
 
@@ -44,7 +44,7 @@ public class QiwkEtlListener extends AbstractBaseKafkaListener {
     // `<spring-kafka.version>2.5.3.RELEASE</spring-kafka.version>`
     // otherwise consumer group will be `kafka_consumerListener` ignoring
     // `spring.kafka.consumer.group-id` property
-    @KafkaListener(id = "kafka_qiwkEtlListener", idIsGroup = false, topics = {"${kafka.topic.qiwk}"})
+    @KafkaListener(id = "kafka_auditEtlListener", idIsGroup = false, topics = {"${kafka.topic.audit}"})
     // Acknowledgment is for manual commits used along with ErrorTemplate.
     // If you do not need such kind of error control, it can be removed along with
     // `spring.kafka.listener.ack-mode: MANUAL_IMMEDIATE`

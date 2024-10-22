@@ -4,8 +4,8 @@ package AuditManager.kafka.producer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import AuditManager.kafka.producer.dto.QiwkEventMetadata;
-import AuditManager.kafka.producer.dto.QiwkEventPayload;
+import AuditManager.kafka.producer.dto.AuditEventMetadata;
+import AuditManager.kafka.producer.dto.AuditEventPayload;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -30,17 +30,17 @@ public class KafkaProducer {
 		kafkaTemplate.send(topicName,partition,key,message);
 	}
 
-	public QiwkEventMetadata setMetadata(String eventName) {
-		QiwkEventMetadata metadata = new QiwkEventMetadata();
+	public AuditEventMetadata setMetadata(String eventName) {
+		AuditEventMetadata metadata = new AuditEventMetadata();
 		metadata.setEventName(eventName);
-		metadata.setEventSource("QIWK_ETL");
+		metadata.setEventSource("AUDIT_REPORT");
 		metadata.setEventVersion("1.0");
 		metadata.setEventTime(LocalDateTime.now().toString());
 		return metadata;
 	}
 
-	public QiwkEventPayload setPayload(String mode, String objectName, HashMap<String, String> dataMap) {
-		QiwkEventPayload payload = new QiwkEventPayload();
+	public AuditEventPayload setPayload(String mode, String objectName, HashMap<String, String> dataMap) {
+		AuditEventPayload payload = new AuditEventPayload();
 		payload.setObjectName(objectName);
 		payload.setMode(mode);
 		payload.setDataMap(dataMap);

@@ -1,10 +1,10 @@
-package com.acnovate.kafka.consumer.qiwk;
+package com.acnovate.kafka.consumer.audit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class KafkaQiwkEtlConsumerApplicationTests {
+class KafkaAuditConsumerApplicationTests {
 
 	@Test
 	void contextLoads() {

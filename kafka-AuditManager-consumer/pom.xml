@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.acnovate</groupId>
-	<artifactId>kafka-qiwk-consumer</artifactId>
+	<artifactId>kafka-audit-consumer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>kafka-windchill-qiwk-consumer</name>
-	<description>Qiwk ETL Kafka Consumer</description>
+	<name>kafka-audit-consumer</name>
+	<description>Audit Kafka Consumer</description>
 
 	<properties>
 		<java.version>11</java.version>

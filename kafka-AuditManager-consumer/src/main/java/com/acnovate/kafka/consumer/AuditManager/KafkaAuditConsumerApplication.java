@@ -9,10 +9,10 @@ import org.springframework.kafka.annotation.EnableKafka;
 @SpringBootApplication
 @EnableKafka
 @EnableJpaAuditing
-public class KafkaQiwkEtlConsumerApplication {
+public class KafkaAuditConsumerApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(KafkaQiwkEtlConsumerApplication.class, args);
+		ApplicationContext context = SpringApplication.run(KafkaAuditConsumerApplication.class, args);
 
 	}
 

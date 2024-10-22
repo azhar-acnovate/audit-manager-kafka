@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="kafka-audit-producer" />
         <module name="kafka-qiwk-producer" />
       </profile>
     </annotationProcessing>
@@ -14,6 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="kafka-audit-producer" options="-parameters" />
       <module name="kafka-qiwk-producer" options="-parameters" />
     </option>
   </component>

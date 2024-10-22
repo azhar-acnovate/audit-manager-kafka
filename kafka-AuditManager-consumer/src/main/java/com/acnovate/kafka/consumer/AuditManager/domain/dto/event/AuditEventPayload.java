@@ -11,7 +11,7 @@ import java.util.HashMap;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class QiwkEventPayload {
+public class AuditEventPayload {
 
 	private String ObjectName;
 	private String mode;

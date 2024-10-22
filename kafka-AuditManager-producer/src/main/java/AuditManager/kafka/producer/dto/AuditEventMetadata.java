@@ -1,6 +1,6 @@
-package com.acnovate.kafka.consumer.AuditManager.domain.dto.event;
+package AuditManager.kafka.producer.dto;
 
-public class QiwkEventMetadata {	
+public class AuditEventMetadata {	
 	
 	private String eventVersion;
 	private String eventName;

@@ -13,13 +13,16 @@ import org.springframework.util.StopWatch;
 import com.google.gson.Gson;
 
 import AuditManager.kafka.producer.KafkaProducer;
-import AuditManager.kafka.producer.dto.QiwkEvent;
-import AuditManager.kafka.producer.dto.QiwkEventMetadata;
-import AuditManager.kafka.producer.dto.QiwkEventPayload;
-import AuditManager.kafka.producer.dto.QiwkResponse;
+import AuditManager.kafka.producer.dto.AuditEvent;
+import AuditManager.kafka.producer.dto.AuditEventMetadata;
+import AuditManager.kafka.producer.dto.AuditEventPayload;
+import AuditManager.kafka.producer.dto.AuditResponse;
 
 @Service
 public class AuditReportService {
+
+	@Value(value="${dummy.data.excellocation}")
+	private  String dummyDataExcellocation;
 
 	@Autowired
 	private KafkaProducer kafkaProducer;
@@ -34,10 +37,8 @@ public class AuditReportService {
 	public static String objectName = "AUDIT_OBJECT_CHANGE_TRACKER";
 	public static final Logger log = LoggerFactory.getLogger(AuditReportService.class);
 
-	public void convertAndPublishAuditReport(String mode,QiwkResponse qiwkServiceResponse) {
-		ArrayList<HashMap<String, String>> rootElement = FileReader.readExcelFile("C:\\Audit_Report\\CadData_Sample_Data_audit_object_change_tracker_Test_updated1.xlsx");
-//		ArrayList<HashMap<String, String>> rootElement = FileReader.readExcelFile("C:\\workspace\\Audit Manager Team Workspace\\Kafka -setup\\CadData_Sample_Data_audit_object_change_tracker_Test_updated1.xlsx");
-		
+	public void convertAndPublishAuditReport(String mode,AuditResponse auditServiceResponse) {
+		ArrayList<HashMap<String, String>> rootElement = FileReader.readExcelFile(dummyDataExcellocation);
 		log.info("AuditReportService - convertAndPublishAuditReport - start");
 		final StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
@@ -46,12 +47,12 @@ public class AuditReportService {
 			String key = branchId+objectName;
 			Integer hashCode = key.hashCode() & Integer.MAX_VALUE;
 			log.info("Partition value :"+hashCode%10);
-			QiwkEvent qiwkEvent = new QiwkEvent();
-			QiwkEventMetadata metadata = kafkaProducer.setMetadata(objectName.toUpperCase());
-			QiwkEventPayload payload = kafkaProducer.setPayload(mode, objectName, map);
-			qiwkEvent.setMetadata(metadata);
-			qiwkEvent.setPayload(payload);
-			String eventPayload = gson.toJson(qiwkEvent);
+			AuditEvent auditEvent = new AuditEvent();
+			AuditEventMetadata metadata = kafkaProducer.setMetadata(objectName.toUpperCase());
+			AuditEventPayload payload = kafkaProducer.setPayload(mode, objectName, map);
+			auditEvent.setMetadata(metadata);
+			auditEvent.setPayload(payload);
+			String eventPayload = gson.toJson(auditEvent);
 			log.info("Value of PayLoad : "+eventPayload);
 				kafkaProducer.send(kafkaProducerTopicAuditReportUpdate,hashCode%auditreportUpdatePartitions,key,eventPayload);
 		}

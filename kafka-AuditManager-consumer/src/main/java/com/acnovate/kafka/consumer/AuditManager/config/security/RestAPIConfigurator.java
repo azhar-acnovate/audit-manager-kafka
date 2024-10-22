@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * Properties to configure Qiwk-Webservice Rest Client.
+ * Properties to configure Audit-Webservice Rest Client.
  */
 @Data
 @Component

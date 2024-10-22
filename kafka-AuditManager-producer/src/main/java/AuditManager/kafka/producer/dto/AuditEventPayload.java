@@ -3,7 +3,7 @@ package AuditManager.kafka.producer.dto;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class QiwkEventPayload {
+public class AuditEventPayload {
 	
 	private String ObjectName;
 	private String mode;
