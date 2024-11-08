@@ -1,0 +1,61 @@
+package com.acnovate.auditmanager.service;
+
+import com.acnovate.auditmanager.KafkaProducer;
+import com.acnovate.auditmanager.dto.AuditEvent;
+import com.acnovate.auditmanager.dto.AuditEventMetadata;
+import com.acnovate.auditmanager.dto.AuditEventPayload;
+import com.acnovate.auditmanager.dto.AuditResponse;
+import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+@Service
+public class AuditReportService {
+
+	@Value(value="${dummy.data.excellocation}")
+	private  String dummyDataExcellocation;
+
+	@Autowired
+	private KafkaProducer kafkaProducer;
+
+	@Value(value="${kafka.producer.topic.auditreport.update}")
+	private String kafkaProducerTopicAuditReportUpdate;
+	@Value(value="${kafka.producer.topic.auditreport.update.partitions}")
+	private Integer auditreportUpdatePartitions;
+
+	private Gson gson = new Gson();
+
+	public static String objectName = "AUDIT_OBJECT_CHANGE_TRACKER";
+	public static final Logger log = LoggerFactory.getLogger(AuditReportService.class);
+
+	public void convertAndPublishAuditReport() {
+		ArrayList<HashMap<String, String>> rootElement = FileReader.readExcelFile(dummyDataExcellocation);
+		log.info("AuditReportService - convertAndPublishAuditReport - start");
+		final StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		for(HashMap<String, String> map : rootElement) {
+			String branchId = (String) map.get("REF_OBJECT_ID");
+			String key = branchId+objectName;
+			Integer hashCode = key.hashCode() & Integer.MAX_VALUE;
+			log.info("Partition value :"+hashCode%10);
+			AuditEvent auditEvent = new AuditEvent();
+			AuditEventMetadata metadata = kafkaProducer.setMetadata(objectName.toUpperCase());
+			AuditEventPayload payload = kafkaProducer.setPayload(objectName, map);
+			auditEvent.setMetadata(metadata);
+			auditEvent.setPayload(payload);
+			String eventPayload = gson.toJson(auditEvent);
+			log.info("Value of PayLoad : "+eventPayload);
+				kafkaProducer.send(kafkaProducerTopicAuditReportUpdate,hashCode%auditreportUpdatePartitions,key,eventPayload);
+		}
+		stopWatch.stop();
+		log.info("Total time to process "+rootElement.size()+" events is "+stopWatch.getTotalTimeMillis()+" ms");
+		log.info("AuditReportService - convertAndPublishAuditReport - end");
+	}
+}

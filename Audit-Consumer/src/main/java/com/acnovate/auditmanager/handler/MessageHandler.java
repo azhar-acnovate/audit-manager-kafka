@@ -1,0 +1,33 @@
+package com.acnovate.auditmanager.handler;
+
+
+import com.acnovate.auditmanager.domain.dto.event.AuditEvent;
+
+import java.util.Map;
+
+/**
+ * All Kafka message handlers must implement this interface
+ *
+ * @author Shubham Angachekar
+ */
+public interface MessageHandler {
+
+    /**
+     * Implements a business logic for handling incoming Kafka message
+     *
+     * @param message KafkaMessage unmarshalled as generic SimpleApplicationEvent
+     * @param headers the headers Kafka headers
+     * @return message processing result. Cannot be {@code null}
+     */
+    String handle(AuditEvent message, Map<String, Object> headers);
+
+    /**
+     * Tells if particular handler is supposed to react on incoming event
+     *
+     * @param eventName the event name
+     * @return true or false
+     */
+    boolean isSupported(String eventName);
+
+}
+
