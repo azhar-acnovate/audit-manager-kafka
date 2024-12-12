@@ -26,11 +26,11 @@ public class AuditReportSchedulerService {
 //		}
 //	}
 
-	@Scheduled(fixedDelay = 1000 * 60 * 5) // Every 5 min
-	public void bulkData() {
-		for (int i = 0; i < 30; i++) {
-			auditReportService.publishBulkData();
-		}
-
-	}
+//	@Scheduled(fixedDelay = 1000 * 60 * 5) // Every 5 min
+//	public void bulkData() {
+//		for (int i = 0; i < 30; i++) {
+//			auditReportService.publishBulkData();
+//		}
+//
+//	}
 }

@@ -52,7 +52,7 @@ public class FileReader {
     }
 
     // Helper method to get cell value as a string
-    private static String getCellValue(Cell cell) {
+    public static String getCellValue(Cell cell) {
         if (cell == null) {
             return "";
         }

@@ -50,4 +50,10 @@ public class SourceReferenceObject extends AuditEntity {
 		this.additionalInfo = additionalInfo;
 	}
 
+	@Override
+	public String toString() {
+		return "SourceReferenceObject [id=" + id + ", sourceReferenceName=" + sourceReferenceName
+				+ ", sourceReferenceKey=" + sourceReferenceKey + ", additionalInfo=" + additionalInfo + "]";
+	}
+
 }

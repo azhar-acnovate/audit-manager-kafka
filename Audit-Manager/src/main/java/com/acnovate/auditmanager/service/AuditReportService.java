@@ -71,6 +71,25 @@ public class AuditReportService {
 		log.info("AuditReportService - convertAndPublishAuditReport - end");
 	}
 
+	public void publishChangedData(HashMap<String, String> map) {
+		String branchId = map.get("REF_OBJECT_ID");
+		String key = branchId + OBJECT_NAME;
+		Integer hashCode = key.hashCode() & Integer.MAX_VALUE;
+		log.info("Partition value :{}", hashCode % 10);
+		AuditEvent auditEvent = new AuditEvent();
+		AuditEventMetadata metadata = kafkaProducer.setMetadata(OBJECT_NAME.toUpperCase());
+		AuditEventPayload payload = kafkaProducer.setPayload(OBJECT_NAME, map);
+		auditEvent.setMetadata(metadata);
+		String currentDate = eventOccurenceFomatter.format(new Date());
+		payload.getDataMap().put("event_occurence", currentDate);
+		auditEvent.setPayload(payload);
+
+		String eventPayload = gson.toJson(auditEvent);
+		log.info("Value of PayLoad : {}", eventPayload);
+		kafkaProducer.send(kafkaProducerTopicAuditReportUpdate, hashCode % auditreportUpdatePartitions, key,
+				eventPayload);
+	}
+
 	public void publishBulkData() {
 
 		ArrayList<HashMap<String, String>> rootElement = FileReader.readExcelFile(dummyDataExcellocation);
@@ -139,14 +158,16 @@ public class AuditReportService {
 				break;
 			}
 
-			case "old_value", "new_value", "changed_by":
+			case "old_value":
+			case "new_value":
+			case "changed_by": {
 				if (currentId.equals(entry.getValue())) {
 					newHashMap.put(entry.getKey(), newId);
 				} else {
 					newHashMap.put(entry.getKey(), entry.getValue() + "_" + newId);
 				}
-
 				break;
+			}
 			default:
 				newHashMap.put(entry.getKey(), entry.getValue());
 				break;
